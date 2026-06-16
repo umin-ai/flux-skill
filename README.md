@@ -7,14 +7,6 @@ search, and build board automations.
 
 ## Install
 
-Install straight from this repo:
-
-```bash
-openclaw skills install git:umin-ai/flux-skill
-```
-
-Once it is published to ClawHub, it will also be available by slug:
-
 ```bash
 openclaw skills install flux
 ```
