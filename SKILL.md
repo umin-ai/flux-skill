@@ -40,6 +40,28 @@ API keys carry granular scopes, so a request may succeed for reads but be reject
 writes if the key lacks the scope. A `401` means the key is missing or invalid; a `403`
 means the key is valid but not permitted for that action.
 
+## Quick start
+
+Create a card end to end with `curl`:
+
+```bash
+export FLUX_API_KEY=flux_your_key
+BASE=https://flux.umin.ai
+
+# 1. Find a board and its first column
+curl -fsS -H "Authorization: Bearer $FLUX_API_KEY" "$BASE/api/boards"
+
+# 2. Create a card in that column
+curl -fsS -X POST -H "Authorization: Bearer $FLUX_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "X-Idempotency-Key: $(uuidgen)" \
+  "$BASE/api/cards" \
+  -d '{"boardId":"<board-uuid>","columnId":"<column-uuid>","title":"Hello from an agent"}'
+```
+
+Prefer a ready-made script? See `scripts/create-card.sh`. For copy-paste `curl` covering
+every operation, see `references/examples.md`.
+
 ## Core concepts
 
 - **Active workspace** — most board/card endpoints operate on the *active workspace* tied
@@ -174,3 +196,12 @@ means the key is valid but not permitted for that action.
   IDs from `GET /api/boards/{shortId}`.
 - A `403` on a write usually means the API key lacks the required scope, not that the
   resource is missing.
+
+## Bundled files
+
+- **`references/examples.md`** — copy-paste `curl` for every operation, plus an agent
+  card-triage recipe.
+- **`references/troubleshooting.md`** — status codes, the `assignees` field trap, the
+  CDN `User-Agent` gotcha, idempotency, and ID formats.
+- **`scripts/create-card.sh`** — find a board by title and create a card in its first column.
+- **`scripts/search.sh`** — full-text search across cards and boards.
