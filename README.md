@@ -8,7 +8,7 @@ search, and build board automations.
 ## Install
 
 ```bash
-openclaw skills install flux-skill
+openclaw skills install flux-kanban-agent
 ```
 
 ## Setup
